@@ -1,0 +1,22 @@
+Package: BBS.SDM
+Type: Package
+Title: Fit dynamic occupancy SDM to BBS data
+Version: 0.1.0
+Author: Clark Rushing
+Maintainer: Clark Rushing <crushing05@gmail.com>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.1.0
+Imports: 
+    dplyr,
+    abind,
+    here,
+    mgcv,
+    raster

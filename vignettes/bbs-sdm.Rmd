@@ -1,0 +1,90 @@
+---
+title: "Vignette Title"
+author: "Clark Rushing"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{BBS.SDM}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  eval = FALSE,
+  comment = "#>"
+)
+```
+
+Load packages (refer to ReadMe for instructions for installing needed packages and programs):
+
+```{r}
+library(BBS.tenstop)
+library(BBS.SDM)
+```
+
+
+To fit the SDMs, you will first need to load the raw BBS 10-stop data using the `BBS.tenstop` package. The first time you run `get_BBS10()`, the raw data will need to be downloaded, which may take a few minutes. Subsequent calls will be faster because the data will already be stored locally on your machine:
+
+```{r}
+bbs <- get_BBS10()
+```
+
+# Fitting the SDM for a single species
+
+To illustrate the functions used to the fit the SDM described by Rushing et al. (*in review*), we will first estimate the distribution of a single species, the Fish Crow (*Corvus ossifragus*). **Note that fitting the model can be very time consuming so only run these functions if you *really* want to fit the model yourself. Otherwise, just look at the source code for each function and modify it to your needs**
+
+The basic steps for fitting the SDM's are:
+1) Subset and format the BBS data for the species/timeframe of interest
+2) Subset and format the climate data for the locations/timeframe of interest
+3) Generate initial values for climate coefficients using Presence (these are also used to create psuedo-priors for the indicator variables in the JAGS model)
+4) Fit the model in JAGS
+5) Assess model fit using posterior predictive checks
+6) Generate indices of range dynamics
+
+Because this process involves creating many intermediary objects, the functions automatically save these objects as .rds or .csv files in directories for each species. The user just needs to provide a path to the directory where these output files will be saved. It is best to create this path once and then refer to it in the function arguments throughout the workflow. Use of the `here` package makes it easy to create a full path by specifying a directory relative to the current working directory: 
+
+```{r, eval = FALSE}
+target_dir <- here::here("output") # change 'output' to the desired directory (relative to the current WD)
+```
+
+Using this path, the user can then create a file containing the formatted 10-stop BBS data for the time period and species of interest. Species should be included using the official [four-letter alpha code](https://www.birdpop.org/docs/misc/Alpha_codes_tax.pdf). Note that when you run `GetCorrData()`, the function will automatically create a new directory using the alpha code for the species of interest. In this case, we create a new directory called `output/FICR`:
+
+```{r, eval = FALSE}
+GetCorrData(bbs_raw = bbs, alpha = "FICR", path = target_dir,
+            start.year = 1972, end.year = 2014)
+```
+
+See `?GetCorrData` for additional detail about the arguments for this function. 
+
+The data file created by `GetCorrData()` contain the latitude and longitude of each BBS route where Fish Crow were ever detected during the time period of our analysis. We next need to get the annual climate values for each routes. These values will be stored in the same directory as the BBS data:
+
+```{r, eval = FALSE}
+GetBioVars("FICR", path = target_dir)
+```
+
+Model selection in the SDM is done using Gibbs Variable Selection (GVS), which requires psuedo-priors for the slope parameters describing the relationship between climate predictors and occupancy (see paper for more details). The psuedo-priors require a "good guess" about the value of these slope coefficients. For our analysis, we estimate the mean for each psuedo-prior by fitting a reduced form of the full SDM in program Presence using the function `GetInits()`:
+
+```{r, eval = FALSE}
+GetInits(alpha = "FICR", path = target_dir)
+```
+
+Finally, we can run the model. See `?RunMod` for details about the arguments to this function. Behind the scenes, this function uses the `mcgv::jagam` function to create input data for JAGS to GAM portion of the model, creates the JAGS data object, runs the model, and saves the output (`jags_fit.rds`). Again note that running this function takes a long time and may crash your computer if you do not have adequate memory: 
+
+```{r, eval = FALSE}
+RunMod(alpha = "FICR", path = target_dir, Parallel = TRUE, nI = 100, nB = 10, nC = 1)
+```
+
+Model evaluation is performed using posterior predictive checks, which can be fun using the `ppc()` function:
+
+```{r, eval = FALSE}
+ppc(alpha = "FICR", path = target_dir)
+```
+
+Finally, we can create indices of range dynamics from the fitted model. 
+```{r, eval = FALSE}
+GetOccProb(alpha = "FICR", path = target_dir)
+OccSummary(alpha = "FICR", path = target_dir)
+GetIndices(alpha = "FICR", path = target_dir)
+```
