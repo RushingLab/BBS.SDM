@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Clark Rushing" />
+
+<meta name="date" content="2018-10-19" />
+
+<title>Vignette Title</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Vignette Title</h1>
+<h4 class="author"><em>Clark Rushing</em></h4>
+<h4 class="date"><em>2018-10-19</em></h4>
+
+
+
+<p>Load packages (refer to ReadMe for instructions for installing needed packages and programs):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(BBS.tenstop)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(BBS.SDM)</a></code></pre></div>
+<p>To fit the SDMs, you will first need to load the raw BBS 10-stop data using the <code>BBS.tenstop</code> package. The first time you run <code>get_BBS10()</code>, the raw data will need to be downloaded, which may take a few minutes. Subsequent calls will be faster because the data will already be stored locally on your machine:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">bbs &lt;-<span class="st"> </span><span class="kw">get_BBS10</span>()</a></code></pre></div>
+<div id="fitting-the-sdm-for-a-single-species" class="section level1">
+<h1>Fitting the SDM for a single species</h1>
+<p>To illustrate the functions used to the fit the SDM described by Rushing et al. (<em>in review</em>), we will first estimate the distribution of a single species, the Fish Crow (<em>Corvus ossifragus</em>). <strong>Note that fitting the model can be very time consuming so only run these functions if you <em>really</em> want to fit the model yourself. Otherwise, just look at the source code for each function and modify it to your needs</strong></p>
+<p>The basic steps for fitting the SDM’s are: 1) Subset and format the BBS data for the species/timeframe of interest 2) Subset and format the climate data for the locations/timeframe of interest 3) Generate initial values for climate coefficients using Presence (these are also used to create psuedo-priors for the indicator variables in the JAGS model) 4) Fit the model in JAGS 5) Assess model fit using posterior predictive checks 6) Generate indices of range dynamics</p>
+<p>Because this process involves creating many intermediary objects, the functions automatically save these objects as .rds or .csv files in directories for each species. The user just needs to provide a path to the directory where these output files will be saved. It is best to create this path once and then refer to it in the function arguments throughout the workflow. Use of the <code>here</code> package makes it easy to create a full path by specifying a directory relative to the current working directory:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">target_dir &lt;-<span class="st"> </span>here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;output&quot;</span>) <span class="co"># change 'output' to the desired directory (relative to the current WD)</span></a></code></pre></div>
+<p>Using this path, the user can then create a file containing the formatted 10-stop BBS data for the time period and species of interest. Species should be included using the official <a href="https://www.birdpop.org/docs/misc/Alpha_codes_tax.pdf">four-letter alpha code</a>. Note that when you run <code>GetCorrData()</code>, the function will automatically create a new directory using the alpha code for the species of interest. In this case, we create a new directory called <code>output/FICR</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">GetCorrData</span>(<span class="dt">bbs_raw =</span> bbs, <span class="dt">alpha =</span> <span class="st">&quot;FICR&quot;</span>, <span class="dt">path =</span> target_dir,</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">            <span class="dt">start.year =</span> <span class="dv">1972</span>, <span class="dt">end.year =</span> <span class="dv">2014</span>)</a></code></pre></div>
+<p>See <code>?GetCorrData</code> for additional detail about the arguments for this function.</p>
+<p>The data file created by <code>GetCorrData()</code> contain the latitude and longitude of each BBS route where Fish Crow were ever detected during the time period of our analysis. We next need to get the annual climate values for each routes. These values will be stored in the same directory as the BBS data:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">GetBioVars</span>(<span class="st">&quot;FICR&quot;</span>, <span class="dt">path =</span> target_dir)</a></code></pre></div>
+<p>Model selection in the SDM is done using Gibbs Variable Selection (GVS), which requires psuedo-priors for the slope parameters describing the relationship between climate predictors and occupancy (see paper for more details). The psuedo-priors require a “good guess” about the value of these slope coefficients. For our analysis, we estimate the mean for each psuedo-prior by fitting a reduced form of the full SDM in program Presence using the function <code>GetInits()</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">GetInits</span>(<span class="dt">alpha =</span> <span class="st">&quot;FICR&quot;</span>, <span class="dt">path =</span> target_dir)</a></code></pre></div>
+<p>Finally, we can run the model. See <code>?RunMod</code> for details about the arguments to this function. Behind the scenes, this function uses the <code>mcgv::jagam</code> function to create input data for JAGS to GAM portion of the model, creates the JAGS data object, runs the model, and saves the output (<code>jags_fit.rds</code>). Again note that running this function takes a long time and may crash your computer if you do not have adequate memory:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">RunMod</span>(<span class="dt">alpha =</span> <span class="st">&quot;FICR&quot;</span>, <span class="dt">path =</span> target_dir, <span class="dt">Parallel =</span> <span class="ot">TRUE</span>, <span class="dt">nI =</span> <span class="dv">100</span>, <span class="dt">nB =</span> <span class="dv">10</span>, <span class="dt">nC =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p>Model evaluation is performed using posterior predictive checks, which can be fun using the <code>ppc()</code> function:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">ppc</span>(<span class="dt">alpha =</span> <span class="st">&quot;FICR&quot;</span>, <span class="dt">path =</span> target_dir)</a></code></pre></div>
+<p>Finally, we can create indices of range dynamics from the fitted model. The function <code>GetOccProp()</code> derives the posterior occupancy probability for each cell in each year and <code>OccSummary()</code> then returns the annual mean posterior probabilities for easier visualization. <code>GetIndices()</code> uses the occupancy posteriors to estimate the range dynamic indices described in Rushing et al. (<em>in review</em>):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">GetOccProb</span>(<span class="dt">alpha =</span> <span class="st">&quot;FICR&quot;</span>, <span class="dt">path =</span> target_dir)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw">OccSummary</span>(<span class="dt">alpha =</span> <span class="st">&quot;FICR&quot;</span>, <span class="dt">path =</span> target_dir)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">GetIndices</span>(<span class="dt">alpha =</span> <span class="st">&quot;FICR&quot;</span>, <span class="dt">path =</span> target_dir)</a></code></pre></div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
