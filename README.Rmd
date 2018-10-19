@@ -21,7 +21,7 @@ You can install BBS.SDM from [Github](https://github.com) with:
 
 ``` r
 #install.packages("devtools")
-devtools::install_github("crushing05/BBS.SDM")
+devtools::install_github("RushingLab/BBS.SDM")
 ```
 
 ## Additional software and packages needed
