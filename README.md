@@ -5,7 +5,7 @@ The goal of BBS.SDM is to …
 
 ## Installation
 
-You can install BBS.SDM from [Github](https://CRAN.R-project.org) with:
+You can install BBS.SDM from [Github](https://github.com) with:
 
 ``` r
 #install.packages("devtools")
